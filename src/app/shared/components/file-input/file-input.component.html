@@ -1,0 +1,10 @@
+<div>
+  <button [disabled]="disabled" (click)="selectFile()">{{ btnName }}</button>
+  <input
+    #fileInput
+    type="file"
+    (change)="fileChanged($event)"
+    [disabled]="disabled"
+    style="display: none"
+  />
+</div>

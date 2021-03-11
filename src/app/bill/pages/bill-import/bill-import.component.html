@@ -1,0 +1,10 @@
+<div>
+  <bgt-file-input
+    #fileInput
+    (fileChange)="billFileChange($event)"
+    btnName="Import from Notion"
+  ></bgt-file-input>
+  <bgt-bill-list
+    [bills]="billImportService.importedBills$ | async"
+  ></bgt-bill-list>
+</div>

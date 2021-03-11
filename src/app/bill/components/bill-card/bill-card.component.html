@@ -1,0 +1,14 @@
+<div *ngIf="billCardService.UIState$ | async as state">
+  <bgt-bill-card-empty
+    *ngIf="state === BillCardState.empty"
+  ></bgt-bill-card-empty>
+  <bgt-bill-card-loading
+    *ngIf="state === BillCardState.loading"
+  ></bgt-bill-card-loading>
+  <bgt-bill-card-loaded
+    *ngIf="state === BillCardState.loaded"
+  ></bgt-bill-card-loaded>
+  <bgt-bill-card-error
+    *ngIf="state === BillCardState.error"
+  ></bgt-bill-card-error>
+</div>

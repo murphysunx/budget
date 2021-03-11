@@ -1,0 +1,6 @@
+<mat-chip-list *ngIf="categories">
+  <bgt-bill-card-category
+    *ngFor="let cat of categories"
+    [category]="cat"
+  ></bgt-bill-card-category>
+</mat-chip-list>
