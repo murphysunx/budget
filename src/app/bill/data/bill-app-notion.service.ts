@@ -39,11 +39,12 @@ export class BillAppNotionService {
       cost: this.extractNotionBillByAttrName(obj, NBKPrice),
       note: this.extractNotionBillByAttrName(obj, NBKNote),
       payDate: this.extractNotionBillByAttrName(obj, NBKPayDate),
-      effectDate: this.extractNotionBillByAttrName(obj, NBKEffectDate),
+      // effectDate: this.extractNotionBillByAttrName(obj, NBKEffectDate),
     };
-    if (bill.effectDate && !bill.payDate) {
-      bill.payDate = bill.effectDate;
-    }
+    // TODO effect date extraction
+    // if (bill.effectDate && !bill.payDate) {
+    //   bill.payDate = bill.effectDate;
+    // }
     return bill;
   }
 

@@ -12,7 +12,8 @@ export interface IBill extends IBillItem {
   payer?: any;
   payee?: any;
   venue?: any;
-  effectDate: string;
+  effectStartDate?: string;
+  effectEndDate?: string;
   payDate: string;
   items?: IBillItem[];
 }

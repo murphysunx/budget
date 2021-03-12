@@ -1,0 +1,72 @@
+<form [formGroup]="billForm" (ngSubmit)="onSubmit()">
+  <p>
+    <mat-form-field>
+      <mat-label>Payer</mat-label>
+      <input matInput placeholder="Payer" formControlName="payer" />
+    </mat-form-field>
+  </p>
+  <p>
+    <mat-form-field>
+      <mat-label>Payee</mat-label>
+      <input matInput placeholder="Payee" formControlName="payee" />
+    </mat-form-field>
+  </p>
+  <p>
+    <mat-form-field>
+      <mat-label>Venue</mat-label>
+      <input matInput placeholder="Venue" formControlName="venue" />
+    </mat-form-field>
+  </p>
+  <p>
+    <mat-form-field>
+      <mat-label>Pay Date</mat-label>
+      <input
+        matInput
+        placeholder="Pay Date"
+        formControlName="payDate"
+        [matDatepicker]="payDatePicker"
+      />
+      <mat-datepicker-toggle
+        matSuffix
+        [for]="payDatePicker"
+      ></mat-datepicker-toggle>
+      <mat-datepicker #payDatePicker></mat-datepicker>
+    </mat-form-field>
+  </p>
+  <p>
+    <mat-form-field>
+      <mat-label>Effect Date Range</mat-label>
+      <mat-date-range-input [rangePicker]="effectDatePicker">
+        <input
+          matStartDate
+          formControlName="effectStartDate"
+          placeholder="Start date"
+        />
+
+        <input
+          matEndDate
+          formControlName="effectEndDate"
+          placeholder="End date"
+        />
+      </mat-date-range-input>
+      <mat-datepicker-toggle
+        matSuffix
+        [for]="effectDatePicker"
+      ></mat-datepicker-toggle>
+      <mat-date-range-picker #effectDatePicker></mat-date-range-picker>
+      <mat-error
+        *ngIf="
+          billForm.controls.effectStartDate.hasError('matStartDateInvalid')
+        "
+      >
+        Invalid start date
+      </mat-error>
+      <mat-error
+        *ngIf="billForm.controls.effectEndDate.hasError('matEndDateInvalid')"
+      >
+        Invalid end date
+      </mat-error>
+    </mat-form-field>
+  </p>
+  <button type="submit" [disabled]="billForm.invalid">Submit</button>
+</form>
