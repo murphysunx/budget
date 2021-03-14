@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { BillAppNotionService } from '../../data/bill-app-notion.service';
-import * as billParser from '../../utils/parser';
 import { BillImportService } from './bill-import.service';
 
 @Component({

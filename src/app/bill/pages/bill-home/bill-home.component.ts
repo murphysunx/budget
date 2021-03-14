@@ -1,6 +1,9 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { FileInputComponent } from 'src/app/shared/components/file-input/file-input.component';
+import { Component, OnInit } from '@angular/core';
+import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 
+import { BillService } from '../../data/bill.service';
+import { IBill } from '../../types/bill';
 
 @Component({
   selector: 'bgt-bill-home',
@@ -8,11 +11,11 @@ import { FileInputComponent } from 'src/app/shared/components/file-input/file-in
   styleUrls: ['./bill-home.component.scss'],
 })
 export class BillHomeComponent implements OnInit {
-  @ViewChild('fileInput', { static: true }) fileInput?: FileInputComponent;
+  constructor(private billService: BillService) {}
 
-  constructor() {}
+  get bills$(): Observable<IBill[]> {
+    return this.billService.bills$;
+  }
 
   ngOnInit(): void {}
-
-
 }

@@ -1,20 +1,18 @@
-export interface IBillItem {
-  id: string;
-  name?: string;
-  price?: number;
-  categories: string[];
-  qty?: number;
-  cost: number;
-  note?: string;
-}
+import { IBillItem } from './bill-item';
 
-export interface IBill extends IBillItem {
+export interface IDraftBill {
   payer?: any;
   payee?: any;
   venue?: any;
   effectStartDate?: string;
   effectEndDate?: string;
   payDate: string;
+  items?: IBillItem[];
+  note?: string;
+}
+
+export interface IBill extends IDraftBill {
+  id: string;
   items?: IBillItem[];
 }
 

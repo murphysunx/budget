@@ -33,10 +33,10 @@ export class BillAppNotionService {
     const bill: IBill = {
       id: uuidv4(),
       payee: this.extractNotionBillByAttrName(obj, NBKVenue),
-      categories: this.splitCategories(
-        this.extractNotionBillByAttrName(obj, NBKType)
-      ),
-      cost: this.extractNotionBillByAttrName(obj, NBKPrice),
+      // categories: this.splitCategories(
+      //   this.extractNotionBillByAttrName(obj, NBKType)
+      // ),
+      // cost: this.extractNotionBillByAttrName(obj, NBKPrice),
       note: this.extractNotionBillByAttrName(obj, NBKNote),
       payDate: this.extractNotionBillByAttrName(obj, NBKPayDate),
       // effectDate: this.extractNotionBillByAttrName(obj, NBKEffectDate),

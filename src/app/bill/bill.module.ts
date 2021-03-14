@@ -9,6 +9,7 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { SharedModule } from '../shared/share.module';
+import { BillRoutingModule } from './bill-routing.module';
 import { BillCardComponent } from './components/bill-card/bill-card.component';
 import { BillCardEmptyComponent } from './components/bill-card/templates/bill-card-empty/bill-card-empty.component';
 import { BillCardErrorComponent } from './components/bill-card/templates/bill-card-error/bill-card-error.component';
@@ -21,6 +22,7 @@ import { BillListComponent } from './components/bill-list/bill-list.component';
 import { BillHomeComponent } from './pages/bill-home/bill-home.component';
 import { BillImportComponent } from './pages/bill-import/bill-import.component';
 import { BillNewComponent } from './pages/bill-new/bill-new.component';
+import { BillItemFormComponent } from './components/bill-item-form/bill-item-form.component';
 
 @NgModule({
   declarations: [
@@ -36,9 +38,11 @@ import { BillNewComponent } from './pages/bill-new/bill-new.component';
     BillCardCategoryListComponent,
     BillFormComponent,
     BillNewComponent,
+    BillItemFormComponent,
   ],
   imports: [
     CommonModule,
+    BillRoutingModule,
     MatCardModule,
     SharedModule,
     MatChipsModule,

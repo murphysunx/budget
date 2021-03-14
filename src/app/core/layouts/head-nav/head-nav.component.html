@@ -1,0 +1,23 @@
+<div class="">
+  <ul class="nav justify-content-center">
+    <li class="nav-item">
+      <button mat-button (click)="toggleSideBar()">
+        <mat-icon>menu</mat-icon>
+      </button>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" [routerLink]="['/home']">Home</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" [routerLink]="['/import']">Import</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" [routerLink]="['/new']">New</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true"
+        >Disabled</a
+      >
+    </li>
+  </ul>
+</div>

@@ -68,5 +68,20 @@
       </mat-error>
     </mat-form-field>
   </p>
-  <button type="submit" [disabled]="billForm.invalid">Submit</button>
+  <button
+    mat-raised-button
+    color="primary"
+    type="submit"
+    [disabled]="billForm.invalid"
+  >
+    Finish
+  </button>
+  <button
+    mat-raised-button
+    color="accent"
+    [disabled]="billForm.pristine"
+    (click)="onResetBillForm()"
+  >
+    Reset
+  </button>
 </form>

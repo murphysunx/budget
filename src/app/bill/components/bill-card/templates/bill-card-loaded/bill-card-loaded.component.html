@@ -1,13 +1,13 @@
 <mat-card>
   <mat-card-header>
     <div mat-card-avatar *ngIf="cardIndex !== undefined">{{ cardIndex }}</div>
-    <mat-card-title>{{ bill.name || bill.payee }}</mat-card-title>
+    <mat-card-title>{{ bill.id || bill.payee }}</mat-card-title>
     <mat-card-subtitle>{{ bill.payDate }}</mat-card-subtitle>
   </mat-card-header>
   <div>
-    <bgt-bill-card-category-list
+    <!-- <bgt-bill-card-category-list
       [categories]="bill.categories"
-    ></bgt-bill-card-category-list>
+    ></bgt-bill-card-category-list> -->
   </div>
   <mat-card-content>
     {{ bill.note }}
