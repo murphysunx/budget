@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
+import { IOrderedMap } from '@shared/types/ordered-map';
 import { BehaviorSubject, Observable, of } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { IOrderedMap } from 'src/app/shared/types/ordered-map';
 import * as _ from 'underscore';
 import { v4 as uuid4 } from 'uuid';
 import { IBill, IDraftBill } from '../types/bill';

@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { IBill } from 'src/app/bill/types/bill';
+import { IBill } from '@bill/types/bill';
 
 @Component({
   selector: 'bgt-bill-card-loaded',

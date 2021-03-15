@@ -1,5 +1,18 @@
-<bgt-head-nav></bgt-head-nav>
+<!-- <bgt-head-nav></bgt-head-nav>
 <bgt-body-content>
-  <!-- <bgt-bill-new></bgt-bill-new> -->
   <router-outlet></router-outlet>
-</bgt-body-content>
+</bgt-body-content> -->
+<!-- <bgt-stateful-button></bgt-stateful-button> -->
+<button
+  #statefulButton
+  mat-raised-button
+  stateful
+  [state]="btnState$"
+  [effects]="buttonEffects"
+  (click)="onClick()"
+>
+  <ng-container [ngSwitch]="btnState$ | async">
+    <bgt-btn-loading *ngSwitchCase="ButtonStates.loading"></bgt-btn-loading>
+  </ng-container>
+  Click Me
+</button>

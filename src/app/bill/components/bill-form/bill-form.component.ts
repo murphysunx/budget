@@ -10,7 +10,7 @@ import { AbstractControl, FormBuilder, Validators } from '@angular/forms';
 import * as dayjs from 'dayjs';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
-import { ErrorService } from 'src/app/core/errors/error.service';
+import { ErrorService } from '@core/errors/error.service';
 import { BillService } from '../../data/bill.service';
 import { IBill, IDraftBill } from '../../types/bill';
 

@@ -8,7 +8,7 @@ import { MatNativeDateModule, MatRippleModule } from '@angular/material/core';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
-import { SharedModule } from '../shared/share.module';
+import { SharedModule } from '@shared/share.module';
 import { BillRoutingModule } from './bill-routing.module';
 import { BillCardComponent } from './components/bill-card/bill-card.component';
 import { BillCardEmptyComponent } from './components/bill-card/templates/bill-card-empty/bill-card-empty.component';
