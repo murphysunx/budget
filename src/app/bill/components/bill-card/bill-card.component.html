@@ -1,4 +1,4 @@
-<div *ngIf="billCardService.UIState$ | async as state">
+<!-- <div *ngIf="billCardService.UIState$ | async as state">
   <bgt-bill-card-empty
     *ngIf="state === BillCardState.empty"
   ></bgt-bill-card-empty>
@@ -11,4 +11,12 @@
   <bgt-bill-card-error
     *ngIf="state === BillCardState.error"
   ></bgt-bill-card-error>
+</div> -->
+
+<div>
+  <ng-container
+    statefulView
+    [state$]="billCardService.UIState$"
+    [components]="components"
+  ></ng-container>
 </div>

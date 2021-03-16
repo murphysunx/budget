@@ -7,12 +7,19 @@
   #statefulButton
   mat-raised-button
   stateful
-  [state]="btnState$"
+  [state$]="btnState$"
   [effects]="buttonEffects"
   (click)="onClick()"
 >
-  <ng-container [ngSwitch]="btnState$ | async">
-    <bgt-btn-loading *ngSwitchCase="ButtonStates.loading"></bgt-btn-loading>
-  </ng-container>
+  <ng-container
+    statefulView
+    [state$]="btnState$"
+    [components]="buttonComponents"
+  ></ng-container>
   Click Me
+  <ng-container
+    statefulView
+    [state$]="btnState$"
+    [components]="buttonComponents"
+  ></ng-container>
 </button>

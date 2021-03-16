@@ -1,6 +1,11 @@
+import { Type } from '@angular/core';
 import { Component, Input, OnInit } from '@angular/core';
 import { BillCardService } from './bill-card.service';
 import { EBillCardStates } from './states/bill-card-states';
+import { BillCardEmptyComponent } from './templates/bill-card-empty/bill-card-empty.component';
+import { BillCardErrorComponent } from './templates/bill-card-error/bill-card-error.component';
+import { BillCardLoadedComponent } from './templates/bill-card-loaded/bill-card-loaded.component';
+import { BillCardLoadingComponent } from './templates/bill-card-loading/bill-card-loading.component';
 
 @Component({
   selector: 'bgt-bill-card',
@@ -11,11 +16,19 @@ import { EBillCardStates } from './states/bill-card-states';
 export class BillCardComponent implements OnInit {
   @Input() billId: string | null = null;
 
+  components: {
+    [key in keyof typeof EBillCardStates]: Type<any>;
+  } = {
+    notInit: BillCardEmptyComponent,
+    loading: BillCardLoadingComponent,
+    loaded: BillCardLoadedComponent,
+    empty: BillCardEmptyComponent,
+    error: BillCardErrorComponent,
+  };
+
   readonly BillCardState = EBillCardStates;
 
   constructor(public billCardService: BillCardService) {}
 
-  ngOnInit(): void {
-
-  }
+  ngOnInit(): void {}
 }

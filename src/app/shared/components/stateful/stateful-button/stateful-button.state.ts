@@ -1,6 +1,6 @@
 export enum EStatefulButtonState {
-  init,
-  active,
-  loading,
-  disabled,
+  init = 'init',
+  active = 'active',
+  loading = 'loading',
+  disabled = 'disabled',
 }

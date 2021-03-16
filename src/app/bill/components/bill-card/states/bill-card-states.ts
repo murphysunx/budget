@@ -1,7 +1,7 @@
 export enum EBillCardStates {
-  notInit,
-  loading,
-  loaded,
-  empty,
-  error,
+  notInit = 'notInit',
+  loading = 'loading',
+  loaded = 'loaded',
+  empty = 'empty',
+  error = 'error',
 }
