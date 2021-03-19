@@ -16,8 +16,8 @@ export class AppComponent implements OnInit {
 
   @ViewChild('statefulButton') statefulButton?: MatButton;
 
-  buttonEffects: { [key in keyof typeof EStatefulButtonState]: () => void } = {
-    init: () => {},
+  buttonEffects: { [key in keyof typeof EStatefulButtonState]?: () => void } = {
+    // init: () => {},
     loading: () => {
       if (this.statefulButton) {
         this.statefulButton.disabled = true;
@@ -28,7 +28,7 @@ export class AppComponent implements OnInit {
         this.statefulButton.disabled = false;
       }
     },
-    disabled: () => {},
+    // disabled: () => {},
   };
 
   btnState$ = new BehaviorSubject<EStatefulButtonState>(

@@ -22,7 +22,7 @@ export class StatefulDirective implements OnInit, OnDestroy {
   // @Input() stateType!: Type<any>;
   @Input() state$?: Observable<any>;
   @Input() effects!: {
-    [key: string]: () => void;
+    [key: string]: (() => void) | undefined;
   };
 
   constructor(
@@ -37,7 +37,9 @@ export class StatefulDirective implements OnInit, OnDestroy {
         console.log(`[stateful] state change`, state, this.viewContainerRef);
         if (!!this.effects && has(this.effects, state.toString())) {
           const effect = this.effects[state];
-          effect();
+          if (!!effect) {
+            effect();
+          }
         }
       });
     }

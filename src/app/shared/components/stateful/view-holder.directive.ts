@@ -19,7 +19,7 @@ export class ViewHolderDirective implements OnInit, OnDestroy {
 
   @Input() state$?: Observable<any>;
   @Input() components?: {
-    [key: string]: Type<any>;
+    [key: string]: Type<any> | undefined;
   };
 
   constructor(
@@ -32,10 +32,12 @@ export class ViewHolderDirective implements OnInit, OnDestroy {
       this.viewContainerRef.clear();
       if (!!this.components && has(this.components, state.toString())) {
         const compType = this.components[state];
-        const component = this.componentFactoryResolver.resolveComponentFactory(
-          compType
-        );
-        this.viewContainerRef.createComponent(component);
+        if (!!compType) {
+          const component = this.componentFactoryResolver.resolveComponentFactory(
+            compType
+          );
+          this.viewContainerRef.createComponent(component);
+        }
       }
     });
   }

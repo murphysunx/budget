@@ -68,6 +68,35 @@
       </mat-error>
     </mat-form-field>
   </p>
+  <div
+    formArrayName="items"
+    *ngFor="let item of billForm.get('items')['controls']; let i = index"
+  >
+    <div [formGroupName]="i">
+      <p>
+        <mat-form-field>
+          <mat-label>Item Name</mat-label>
+          <input matInput placeholder="Item Name" formControlName="name" />
+        </mat-form-field>
+      </p>
+      <p>
+        <mat-form-field>
+          <mat-label>Price</mat-label>
+          <input matInput placeholder="Price" formControlName="price" />
+        </mat-form-field>
+      </p>
+      <div
+        formArrayName="categories"
+        *ngFor="
+          let cat of billForm.get('items')[i].get('categories');
+          let j = index;
+          of
+        "
+      >
+        
+      </div>
+    </div>
+  </div>
   <button
     mat-raised-button
     color="primary"

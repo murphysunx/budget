@@ -6,13 +6,21 @@ import {
   OnInit,
   Output,
 } from '@angular/core';
-import { AbstractControl, FormBuilder, Validators } from '@angular/forms';
+import {
+  AbstractControl,
+  FormArray,
+  FormBuilder,
+  FormGroup,
+  Validators,
+} from '@angular/forms';
+import { map, each } from 'underscore';
 import * as dayjs from 'dayjs';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { ErrorService } from '@core/errors/error.service';
 import { BillService } from '../../data/bill.service';
 import { IBill, IDraftBill } from '../../types/bill';
+import { IBillItem } from '@bill/types/bill-item';
 
 @Component({
   selector: 'bgt-bill-form',
@@ -34,6 +42,23 @@ export class BillFormComponent implements OnInit, OnDestroy {
     effectEndDate: this.fb.control(null),
     items: this.fb.array([]),
   });
+
+  private createBillItemForm(item?: IBillItem): FormGroup {
+    return this.fb.group({
+      name: this.fb.control(item?.name || null),
+      price: this.fb.control(item?.price || null),
+      categories: this.createBillItemCategoryForm(item?.categories),
+      qty: this.fb.control(item?.qty || null),
+      cost: this.fb.control(item?.cost || null),
+      note: this.fb.control(item?.note || null),
+    });
+  }
+
+  private createBillItemCategoryForm(categories?: string[]): FormArray {
+    return this.fb.array(
+      categories ? map(categories, (cat) => this.fb.control(cat)) : []
+    );
+  }
 
   constructor(
     private fb: FormBuilder,
@@ -77,6 +102,13 @@ export class BillFormComponent implements OnInit, OnDestroy {
         ? dayjs(bill.effectEndDate).toDate()
         : null,
     });
+    const itemsArray = this.billForm.get('items') as FormArray;
+    if (bill?.items) {
+      each(bill.items, (item) => {
+        const itemControl = this.createBillItemForm(item || null);
+        itemsArray.push(itemControl);
+      });
+    }
   }
 
   private handlePayDateUpdate(value: any): void {
