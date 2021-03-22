@@ -53,6 +53,8 @@
     </mat-form-field>
   </p>
   <bgt-chips-autocomplete
+    label="Item Category"
+    placeholder="Item Category"
     (added)="addCategory($event)"
     (removed)="removeCategory($event)"
     (empty)="emptyCategories()"

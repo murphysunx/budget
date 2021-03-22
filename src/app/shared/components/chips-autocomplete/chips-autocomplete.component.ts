@@ -75,12 +75,13 @@ export class ChipsAutocompleteComponent implements OnInit {
       this.items.push(value);
       this.added.emit(value);
     } else {
-      this.handleDuplication();
+      this.handleDuplication(value);
     }
   }
 
-  private handleDuplication(): void {
+  private handleDuplication(value: string): void {
     // TODO
+    console.warn(`[chips-autocomplete] detect duplication value`, value);
   }
 
   private isDuplicated(value: string): boolean {

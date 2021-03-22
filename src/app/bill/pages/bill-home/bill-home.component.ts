@@ -1,9 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
-
 import { BillService } from '../../data/bill.service';
-import { IBill } from '../../types/bill';
+import { Bill } from '../../types/bill';
 
 @Component({
   selector: 'bgt-bill-home',
@@ -13,7 +11,7 @@ import { IBill } from '../../types/bill';
 export class BillHomeComponent implements OnInit {
   constructor(private billService: BillService) {}
 
-  get bills$(): Observable<IBill[]> {
+  get bills$(): Observable<Bill[]> {
     return this.billService.bills$;
   }
 

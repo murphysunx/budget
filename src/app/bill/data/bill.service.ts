@@ -4,21 +4,21 @@ import { BehaviorSubject, Observable, of } from 'rxjs';
 import { map } from 'rxjs/operators';
 import * as _ from 'underscore';
 import { v4 as uuid4 } from 'uuid';
-import { IBill, IDraftBill } from '../types/bill';
+import { Bill, IBill, IDraftBill } from '../types/bill';
 import { IBillItem } from '../types/bill-item';
 
 @Injectable({
   providedIn: 'root',
 })
 export class BillService {
-  private orderedBills$ = new BehaviorSubject<IOrderedMap<IBill>>({
+  private orderedBills$ = new BehaviorSubject<IOrderedMap<Bill>>({
     ids: [],
     elements: {},
   });
 
   constructor() {}
 
-  get bills$(): Observable<IBill[]> {
+  get bills$(): Observable<Bill[]> {
     return this.orderedBills$.pipe(
       map((orderedBills) => {
         const { ids, elements } = orderedBills;
@@ -29,23 +29,9 @@ export class BillService {
     );
   }
 
-  draftBill(rawBill: IDraftBill): IDraftBill {
-    const { items } = rawBill;
-    const bill: IDraftBill = {
-      ...rawBill,
-      items: items ? _.map(items, (item) => this.createBillItem()) : [],
-    };
-    return bill;
-  }
-
-  createBill(rawBill: IDraftBill): IBill {
-    const draft = this.draftBill(rawBill);
-    const { items } = draft;
-    const bill: IBill = {
-      id: uuid4(),
-      ...draft,
-      items: items ? _.map(items, (item) => this.createBillItem()) : [],
-    };
+  createBill(rawBill: IDraftBill): Bill {
+    const id = uuid4();
+    const bill = new Bill(id, rawBill);
     const { ids, elements } = this.orderedBills$.value;
     const newElements = {
       ...elements,

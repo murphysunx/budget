@@ -2,7 +2,9 @@ import { Injectable } from '@angular/core';
 import * as _ from 'underscore';
 import { v4 as uuidv4 } from 'uuid';
 import {
+  Bill,
   IBill,
+  IDraftBill,
   INotionBill,
   NBKEffectDate,
   NBKNote,
@@ -19,7 +21,7 @@ import {
 export class BillAppNotionService {
   constructor() {}
 
-  public parseBillFile(results: string): IBill[] {
+  public parseBillFile(results: string): Bill[] {
     // console.log(`[bill-home] read file result`, results);
     const raws = this.parseBillFromNotionCsv(results);
     if (!raws?.length) {
@@ -29,9 +31,9 @@ export class BillAppNotionService {
     return bills;
   }
 
-  private parseSingleBill(obj: INotionBill): IBill {
-    const bill: IBill = {
-      id: uuidv4(),
+  private parseSingleBill(obj: INotionBill): Bill {
+    const id = uuidv4();
+    const bill: IDraftBill = {
       payee: this.extractNotionBillByAttrName(obj, NBKVenue),
       // categories: this.splitCategories(
       //   this.extractNotionBillByAttrName(obj, NBKType)
@@ -45,7 +47,7 @@ export class BillAppNotionService {
     // if (bill.effectDate && !bill.payDate) {
     //   bill.payDate = bill.effectDate;
     // }
-    return bill;
+    return new Bill(id, bill);
   }
 
   private splitCategories(rawCat: string | undefined): string[] {

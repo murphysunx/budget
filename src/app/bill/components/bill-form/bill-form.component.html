@@ -71,7 +71,7 @@
   <div>
     <bgt-bill-item-form
       *ngFor="let item of itemsControl"
-      [billItemControl]="getBillItemControl(item)"
+      [billItemControl]="item"
     ></bgt-bill-item-form>
   </div>
   <button

@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
-import { IBill } from '../../types/bill';
+import { Bill } from '../../types/bill';
 
 @Injectable()
 export class BillImportService {
-  importedBills$ = new BehaviorSubject<IBill[]>([]);
+  importedBills$ = new BehaviorSubject<Bill[]>([]);
 
   constructor() {}
 }

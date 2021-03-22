@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { IBill } from '../../types/bill';
+import { Bill } from '../../types/bill';
 
 @Component({
   selector: 'bgt-bill-list',
@@ -7,7 +7,7 @@ import { IBill } from '../../types/bill';
   styleUrls: ['./bill-list.component.scss'],
 })
 export class BillListComponent implements OnInit {
-  @Input() bills: IBill[] | null = [];
+  @Input() bills: Bill[] | null = [];
 
   constructor() {}
 

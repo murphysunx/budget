@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { IBill } from '@bill/types/bill';
+import { Bill } from '@bill/types/bill';
 
 @Component({
   selector: 'bgt-bill-card-loaded',
@@ -8,7 +8,7 @@ import { IBill } from '@bill/types/bill';
 })
 export class BillCardLoadedComponent implements OnInit {
   @Input() cardIndex?: number;
-  @Input() bill!: IBill;
+  @Input() bill!: Bill;
 
   constructor() {}
 
