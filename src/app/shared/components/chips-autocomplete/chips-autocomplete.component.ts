@@ -16,6 +16,7 @@ import { FormControl } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
 import { MatChipInputEvent } from '@angular/material/chips';
+import { contains } from 'underscore';
 
 @Component({
   selector: 'bgt-chips-autocomplete',
@@ -61,11 +62,29 @@ export class ChipsAutocompleteComponent implements OnInit {
     );
   }
 
+  private preprocessValue(value: string): string {
+    return (value || '').trim();
+  }
+
   private addItem(value: string): void {
-    if ((value || '').trim()) {
-      this.items.push(value.trim());
-      this.added.emit(value.trim());
+    value = this.preprocessValue(value);
+    if (!value) {
+      return;
     }
+    if (this.allowDuplication || !this.isDuplicated(value)) {
+      this.items.push(value);
+      this.added.emit(value);
+    } else {
+      this.handleDuplication();
+    }
+  }
+
+  private handleDuplication(): void {
+    // TODO
+  }
+
+  private isDuplicated(value: string): boolean {
+    return contains(this.items, value);
   }
 
   private removeItem(item: string): void {
@@ -79,13 +98,10 @@ export class ChipsAutocompleteComponent implements OnInit {
   add(event: MatChipInputEvent): void {
     const input = event.input;
     const value = event.value;
-
     this.addItem(value);
-
     if (input) {
       input.value = '';
     }
-
     this.itemCtrl.setValue(null);
   }
 
