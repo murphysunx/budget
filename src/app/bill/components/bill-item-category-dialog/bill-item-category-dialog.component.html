@@ -1,0 +1,11 @@
+<h1 mat-dialog-title>Hi</h1>
+<div mat-dialog-content>
+  <mat-form-field>
+    <mat-label>Item Catgory</mat-label>
+    <input matInput [(ngModel)]="category" />
+  </mat-form-field>
+</div>
+<div mat-dialog-actions>
+  <button mat-button (click)="onCancel()">No Thanks</button>
+  <button mat-button [mat-dialog-close]="category" cdkFocusInitial>Ok</button>
+</div>

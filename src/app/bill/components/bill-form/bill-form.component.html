@@ -1,13 +1,13 @@
 <form [formGroup]="billForm" (ngSubmit)="onSubmit()">
   <p>
     <mat-form-field>
-      <mat-label>Payer</mat-label>
+      <mat-label>Payer*</mat-label>
       <input matInput placeholder="Payer" formControlName="payer" />
     </mat-form-field>
   </p>
   <p>
     <mat-form-field>
-      <mat-label>Payee</mat-label>
+      <mat-label>Payee*</mat-label>
       <input matInput placeholder="Payee" formControlName="payee" />
     </mat-form-field>
   </p>
@@ -19,7 +19,7 @@
   </p>
   <p>
     <mat-form-field>
-      <mat-label>Pay Date</mat-label>
+      <mat-label>Pay Date*</mat-label>
       <input
         matInput
         placeholder="Pay Date"
@@ -68,35 +68,20 @@
       </mat-error>
     </mat-form-field>
   </p>
-  <div
-    formArrayName="items"
-    *ngFor="let item of billForm.get('items')['controls']; let i = index"
-  >
-    <div [formGroupName]="i">
-      <p>
-        <mat-form-field>
-          <mat-label>Item Name</mat-label>
-          <input matInput placeholder="Item Name" formControlName="name" />
-        </mat-form-field>
-      </p>
-      <p>
-        <mat-form-field>
-          <mat-label>Price</mat-label>
-          <input matInput placeholder="Price" formControlName="price" />
-        </mat-form-field>
-      </p>
-      <div
-        formArrayName="categories"
-        *ngFor="
-          let cat of billForm.get('items')[i].get('categories');
-          let j = index;
-          of
-        "
-      >
-        
-      </div>
-    </div>
+  <div>
+    <bgt-bill-item-form
+      *ngFor="let item of itemsControl"
+      [billItemControl]="getBillItemControl(item)"
+    ></bgt-bill-item-form>
   </div>
+  <button
+    mat-raised-button
+    type="button"
+    (click)="onAddItem()"
+    [disabled]="!billForm.valid"
+  >
+    Add Item
+  </button>
   <button
     mat-raised-button
     color="primary"
