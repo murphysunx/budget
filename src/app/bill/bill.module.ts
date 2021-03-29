@@ -26,6 +26,7 @@ import { BillListComponent } from './components/bill-list/bill-list.component';
 import { BillHomeComponent } from './pages/bill-home/bill-home.component';
 import { BillImportComponent } from './pages/bill-import/bill-import.component';
 import { BillNewComponent } from './pages/bill-new/bill-new.component';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 
 @NgModule({
   declarations: [
@@ -60,6 +61,7 @@ import { BillNewComponent } from './pages/bill-new/bill-new.component';
     MatRippleModule,
     MatDialogModule,
     MatIconModule,
+    MatSlideToggleModule,
   ],
   exports: [BillHomeComponent, BillImportComponent, BillNewComponent],
 })

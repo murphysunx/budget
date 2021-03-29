@@ -10,6 +10,14 @@
     </mat-form-field>
   </p>
   <p>
+    <mat-slide-toggle
+      [checked]="showDetails"
+      (toggleChange)="showDetails = !showDetails"
+      color="primary"
+      >Show Cost Detail</mat-slide-toggle
+    >
+  </p>
+  <p *ngIf="showDetails">
     <mat-form-field>
       <mat-label>Price</mat-label>
       <input
@@ -20,7 +28,7 @@
       />
     </mat-form-field>
   </p>
-  <p>
+  <p *ngIf="showDetails">
     <mat-form-field>
       <mat-label>Quantity</mat-label>
       <input

@@ -11,6 +11,8 @@ import { BillItemCategoryDialogComponent } from '../bill-item-category-dialog/bi
 export class BillItemFormComponent implements OnInit {
   @Input() billItemControl!: FormGroup;
 
+  showDetails = false;
+
   constructor(private dialog: MatDialog, private fb: FormBuilder) {}
 
   ngOnInit(): void {}

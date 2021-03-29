@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { AbstractControl, FormGroup } from '@angular/forms';
+import { FormGroup } from '@angular/forms';
 import { Bill, IDraftBill } from '../../types/bill';
 import { BillFormService } from './bill-form.service';
 
@@ -11,7 +11,7 @@ import { BillFormService } from './bill-form.service';
 })
 export class BillFormComponent implements OnInit {
   @Input() bill: Bill | null = null;
-  @Output() finishEdit = new EventEmitter<IDraftBill>();
+  @Output() submitted = new EventEmitter<IDraftBill>();
 
   constructor(private billFormService: BillFormService) {}
 
@@ -30,7 +30,8 @@ export class BillFormComponent implements OnInit {
   onSubmit(): void {
     console.log(`[bill-form] Submit bill form`, this.billFormService.billForm);
     const bill = this.billFormService.billForm.value;
-    this.finishEdit.emit(bill);
+    this.submitted.emit(bill);
+    this.onResetBillForm();
   }
 
   onResetBillForm(): void {

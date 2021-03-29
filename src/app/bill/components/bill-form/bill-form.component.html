@@ -1,4 +1,4 @@
-<form [formGroup]="billForm" (ngSubmit)="onSubmit()">
+<form [formGroup]="billForm">
   <p>
     <mat-form-field>
       <mat-label>Payer*</mat-label>
@@ -87,6 +87,7 @@
     color="primary"
     type="submit"
     [disabled]="billForm.invalid"
+    (click)="onSubmit()"
   >
     Finish
   </button>
