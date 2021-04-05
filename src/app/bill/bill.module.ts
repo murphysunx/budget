@@ -28,6 +28,7 @@ import { BillImportComponent } from './pages/bill-import/bill-import.component';
 import { BillNewComponent } from './pages/bill-new/bill-new.component';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { BillItemContainerDirective } from './components/bill-item-form/bill-item-container.directive';
+import { BillEditComponent } from './pages/bill-edit/bill-edit.component';
 
 @NgModule({
   declarations: [
@@ -46,6 +47,7 @@ import { BillItemContainerDirective } from './components/bill-item-form/bill-ite
     BillItemFormComponent,
     BillItemCategoryDialogComponent,
     BillItemContainerDirective,
+    BillEditComponent,
   ],
   imports: [
     CommonModule,

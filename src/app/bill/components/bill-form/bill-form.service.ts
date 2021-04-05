@@ -1,18 +1,12 @@
 import { Injectable, OnDestroy } from '@angular/core';
-import {
-  AbstractControl,
-  FormArray,
-  FormBuilder,
-  FormGroup,
-  Validators,
-} from '@angular/forms';
+import { AbstractControl, FormArray, FormGroup } from '@angular/forms';
 import { Bill } from '@bill/types/bill';
-import { IBillItem } from '@bill/types/bill-item';
 import { ErrorService } from '@core/errors/error.service';
 import * as dayjs from 'dayjs';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
-import { each, map } from 'underscore';
+import { each } from 'underscore';
+import { BillFormBuilderService } from '../services/bill-form-builder.service';
 
 @Injectable()
 export class BillFormService implements OnDestroy {
@@ -20,17 +14,12 @@ export class BillFormService implements OnDestroy {
 
   bill: Bill | null = null;
 
-  billForm = this.fb.group({
-    payer: this.fb.control(null, [Validators.required]),
-    payee: this.fb.control(null, [Validators.required]),
-    venue: this.fb.control(null),
-    payDate: this.fb.control(null, [Validators.required]),
-    effectStartDate: this.fb.control(null),
-    effectEndDate: this.fb.control(null),
-    items: this.fb.array([]),
-  });
+  billForm = this.billFormBuilderService.createBillForm();
 
-  constructor(private fb: FormBuilder, private errorService: ErrorService) {
+  constructor(
+    private errorService: ErrorService,
+    private billFormBuilderService: BillFormBuilderService
+  ) {
     this.billForm
       .get('payDate')
       ?.valueChanges.pipe(takeUntil(this.destroy$))
@@ -67,27 +56,12 @@ export class BillFormService implements OnDestroy {
     const itemsArray = this.billForm.get('items') as FormArray;
     if (bill?.items) {
       each(bill.items, (item) => {
-        const itemControl = this.createBillItemForm(item || null);
+        const itemControl = this.billFormBuilderService.createBillItemForm(
+          item || null
+        );
         itemsArray.push(itemControl);
       });
     }
-  }
-
-  private createBillItemForm(item?: IBillItem): FormGroup {
-    return this.fb.group({
-      name: this.fb.control(item?.name || null, [Validators.required]),
-      price: this.fb.control(item?.price || null, [Validators.min(0)]),
-      categories: this.createBillItemCategoryForm(item?.categories),
-      qty: this.fb.control(item?.qty || null, [Validators.min(0)]),
-      cost: this.fb.control(item?.cost || null, [Validators.min(0)]),
-      note: this.fb.control(item?.note || null),
-    });
-  }
-
-  private createBillItemCategoryForm(categories?: string[]): FormArray {
-    return this.fb.array(
-      categories ? map(categories, (cat) => this.fb.control(cat)) : []
-    );
   }
 
   private handlePayDateUpdate(value: any): void {

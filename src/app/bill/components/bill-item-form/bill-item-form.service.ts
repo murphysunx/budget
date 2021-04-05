@@ -1,33 +1,76 @@
-import { Injectable } from '@angular/core';
-import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Injectable, OnDestroy } from '@angular/core';
+import { FormArray, FormControl, FormGroup } from '@angular/forms';
 import { IBillItem } from '@bill/types/bill-item';
-import { map } from 'underscore';
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
+import { BillFormBuilderService } from '../services/bill-form-builder.service';
 
 @Injectable()
-export class BillItemFormService {
+export class BillItemFormService implements OnDestroy {
+  private destroy$ = new Subject();
+
   billItemControl: FormGroup | null = null;
 
-  constructor(private fb: FormBuilder) {}
+  constructor(private billFormBuilderService: BillFormBuilderService) {}
 
-  private createBillItemForm(item?: IBillItem): FormGroup {
-    return this.fb.group({
-      name: this.fb.control(item?.name || null, [Validators.required]),
-      price: this.fb.control(item?.price || null, [Validators.min(0)]),
-      categories: this.createBillItemCategoryForm(item?.categories),
-      qty: this.fb.control(item?.qty || null, [Validators.min(0)]),
-      cost: this.fb.control(item?.cost || null, [Validators.min(0)]),
-      note: this.fb.control(item?.note || null),
-    });
-  }
-
-  private createBillItemCategoryForm(categories?: string[]): FormArray {
-    return this.fb.array(
-      categories ? map(categories, (cat) => this.fb.control(cat)) : []
-    );
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 
   createBillItemCtrl(item?: IBillItem): void {
-    const ctrl = this.createBillItemForm(item);
+    const ctrl = this.billFormBuilderService.createBillItemForm(item);
     this.billItemControl = ctrl;
+    this.setup();
+  }
+
+  private setup(): void {
+    const qtyCtrl = this.billItemControl!.get('qty') as FormControl;
+    const priceCtrl = this.billItemControl!.get('price') as FormControl;
+    qtyCtrl.valueChanges.pipe(takeUntil(this.destroy$)).subscribe((qty) => {
+      const costCtrl = this.billItemControl!.get('cost') as FormControl;
+      const price = priceCtrl.value;
+      if (!!price) {
+        costCtrl.setValue(qty * price);
+      } else {
+        costCtrl.setValue(0);
+      }
+    });
+    priceCtrl.valueChanges.pipe(takeUntil(this.destroy$)).subscribe((price) => {
+      const costCtrl = this.billItemControl!.get('cost') as FormControl;
+      const qty = qtyCtrl.value;
+      if (!!qty) {
+        costCtrl.setValue(qty * price);
+      } else {
+        costCtrl.setValue(0);
+      }
+    });
+  }
+
+  addCategory(category: string): void {
+    const categoryArrayControl = this.billItemControl!.get(
+      'categories'
+    ) as FormArray;
+    const categoryControl = this.billFormBuilderService.createCategoryControl(
+      category
+    );
+    categoryArrayControl.push(categoryControl);
+  }
+
+  removeCategory(category: string): void {
+    const categoryArrayControl = this.billItemControl!.get(
+      'categories'
+    ) as FormArray;
+    const index = (categoryArrayControl.value as string[]).indexOf(category);
+    if (index >= 0) {
+      categoryArrayControl.removeAt(index);
+    }
+  }
+
+  emptyCategories(): void {
+    const categoryArrayControl = this.billItemControl!.get(
+      'categories'
+    ) as FormArray;
+    categoryArrayControl.clear();
   }
 }

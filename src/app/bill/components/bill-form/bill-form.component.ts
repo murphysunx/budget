@@ -10,13 +10,14 @@ import { FormGroup } from '@angular/forms';
 import { Bill, IDraftBill } from '../../types/bill';
 import { BillItemContainerDirective } from '../bill-item-form/bill-item-container.directive';
 import { BillItemFormComponent } from '../bill-item-form/bill-item-form.component';
+import { BillFormBuilderService } from '../services/bill-form-builder.service';
 import { BillFormService } from './bill-form.service';
 
 @Component({
   selector: 'bgt-bill-form',
   templateUrl: './bill-form.component.html',
   styleUrls: ['./bill-form.component.scss'],
-  providers: [BillFormService],
+  providers: [BillFormBuilderService, BillFormService],
 })
 export class BillFormComponent implements OnInit {
   @Input() bill: Bill | null = null;

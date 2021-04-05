@@ -1,8 +1,6 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
-import { FormArray, FormBuilder, FormControl, FormGroup } from '@angular/forms';
+import { Component, OnInit } from '@angular/core';
+import { FormArray, FormControl, FormGroup } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
-import { Subject } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
 import { BillItemCategoryDialogComponent } from '../bill-item-category-dialog/bill-item-category-dialog.component';
 import { BillItemFormService } from './bill-item-form.service';
 
@@ -12,9 +10,7 @@ import { BillItemFormService } from './bill-item-form.service';
   styleUrls: ['./bill-item-form.component.scss'],
   providers: [BillItemFormService],
 })
-export class BillItemFormComponent implements OnInit, OnDestroy {
-  private destroy$ = new Subject();
-
+export class BillItemFormComponent implements OnInit {
   showDetails = false;
 
   get billItemControl(): FormGroup {
@@ -23,39 +19,12 @@ export class BillItemFormComponent implements OnInit, OnDestroy {
 
   constructor(
     private dialog: MatDialog,
-    private fb: FormBuilder,
     private billItemFormService: BillItemFormService
   ) {
     this.billItemFormService.createBillItemCtrl();
   }
 
-  ngOnInit(): void {
-    const qtyCtrl = this.getBillItemPropertyControl('qty');
-    const priceCtrl = this.getBillItemPropertyControl('price');
-    qtyCtrl.valueChanges.pipe(takeUntil(this.destroy$)).subscribe((qty) => {
-      const costCtrl = this.getBillItemPropertyControl('cost');
-      const price = priceCtrl.value;
-      if (!!price) {
-        costCtrl.setValue(qty * price);
-      } else {
-        costCtrl.setValue(0);
-      }
-    });
-    priceCtrl.valueChanges.pipe(takeUntil(this.destroy$)).subscribe((price) => {
-      const costCtrl = this.getBillItemPropertyControl('cost');
-      const qty = qtyCtrl.value;
-      if (!!qty) {
-        costCtrl.setValue(qty * price);
-      } else {
-        costCtrl.setValue(0);
-      }
-    });
-  }
-
-  ngOnDestroy(): void {
-    this.destroy$.next();
-    this.destroy$.complete();
-  }
+  ngOnInit(): void {}
 
   getBillItemPropertyControl(propertyName: string): FormControl {
     return this.billItemControl.get(propertyName) as FormControl;
@@ -66,28 +35,15 @@ export class BillItemFormComponent implements OnInit, OnDestroy {
   }
 
   addCategory(category: string): void {
-    const categoryArrayControl = this.billItemControl.get(
-      'categories'
-    ) as FormArray;
-    const categoryControl = this.fb.control(category);
-    categoryArrayControl.push(categoryControl);
+    this.billItemFormService.addCategory(category);
   }
 
   removeCategory(category: string): void {
-    const categoryArrayControl = this.billItemControl.get(
-      'categories'
-    ) as FormArray;
-    const index = (categoryArrayControl.value as string[]).indexOf(category);
-    if (index >= 0) {
-      categoryArrayControl.removeAt(index);
-    }
+    this.billItemFormService.removeCategory(category);
   }
 
   emptyCategories(): void {
-    const categoryArrayControl = this.billItemControl.get(
-      'categories'
-    ) as FormArray;
-    categoryArrayControl.clear();
+    this.billItemFormService.emptyCategories();
   }
 
   onAddCategory(): void {
@@ -100,11 +56,7 @@ export class BillItemFormComponent implements OnInit, OnDestroy {
       if (!category) {
         return;
       }
-      const categoryArrayControl = this.billItemControl.get(
-        'categories'
-      ) as FormArray;
-      const categoryControl = this.fb.control(category);
-      categoryArrayControl.push(categoryControl);
+      this.addCategory(category);
     });
   }
 }
