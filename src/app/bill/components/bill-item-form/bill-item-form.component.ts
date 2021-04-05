@@ -1,4 +1,4 @@
-import { Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormArray, FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { Subject } from 'rxjs';
@@ -10,16 +10,24 @@ import { BillItemFormService } from './bill-item-form.service';
   selector: 'bgt-bill-item-form',
   templateUrl: './bill-item-form.component.html',
   styleUrls: ['./bill-item-form.component.scss'],
-  providers: [{ useClass: BillItemFormService, provide: FormGroup }],
+  providers: [BillItemFormService],
 })
 export class BillItemFormComponent implements OnInit, OnDestroy {
   private destroy$ = new Subject();
 
-  @Input() billItemControl!: FormGroup;
-
   showDetails = false;
 
-  constructor(private dialog: MatDialog, private fb: FormBuilder) {}
+  get billItemControl(): FormGroup {
+    return this.billItemFormService.billItemControl as FormGroup;
+  }
+
+  constructor(
+    private dialog: MatDialog,
+    private fb: FormBuilder,
+    private billItemFormService: BillItemFormService
+  ) {
+    this.billItemFormService.createBillItemCtrl();
+  }
 
   ngOnInit(): void {
     const qtyCtrl = this.getBillItemPropertyControl('qty');

@@ -130,12 +130,13 @@ export class BillFormService implements OnDestroy {
 
   resetBillForm(bill: Bill | null): void {
     this.billForm.reset();
+    const itemsArray = this.billForm.get('items') as FormArray;
+    itemsArray.clear();
     this.loadBillToForm(bill);
   }
 
-  onAddItem(): void {
-    const itemFormGroup = this.createBillItemForm();
+  onAddItem(ctrl: FormGroup): void {
     const itemsArray = this.billForm.get('items') as FormArray;
-    itemsArray.push(itemFormGroup);
+    itemsArray.push(ctrl);
   }
 }

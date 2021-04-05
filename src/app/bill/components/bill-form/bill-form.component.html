@@ -68,11 +68,8 @@
       </mat-error>
     </mat-form-field>
   </p>
-  <div>
-    <bgt-bill-item-form
-      *ngFor="let item of itemsControl"
-      [billItemControl]="item"
-    ></bgt-bill-item-form>
+  <div *bgtBillItemContainer>
+    <bgt-bill-item-form *ngFor="let item of itemsControl"></bgt-bill-item-form>
   </div>
   <button
     mat-raised-button
