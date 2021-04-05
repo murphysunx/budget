@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable, of } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { BillService } from '../../data/bill.service';
-import { IBill } from '../../types/bill';
+import { Bill, IBill } from '../../types/bill';
 import { EBillCardStates } from './states/bill-card-states';
 
 @Injectable()
@@ -30,5 +30,10 @@ export class BillCardService {
         return of(null);
       })
     );
+  }
+
+  loadBill(bill: Bill): void {
+    this.bill$ = of(bill);
+    this.UIState.next(EBillCardStates.loaded);
   }
 }

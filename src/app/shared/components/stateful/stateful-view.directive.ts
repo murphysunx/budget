@@ -14,12 +14,15 @@ import { has } from 'underscore';
 @Directive({
   selector: '[statefulView]',
 })
-export class ViewHolderDirective implements OnInit, OnDestroy {
+export class StatefulViewDirective implements OnInit, OnDestroy {
   private destroy$ = new Subject();
 
   @Input() state$?: Observable<any>;
-  @Input() components?: {
+  @Input() componentsConfig?: {
     [key: string]: Type<any> | undefined;
+  };
+  @Input() effects!: {
+    [key: string]: (() => void) | undefined;
   };
 
   constructor(
@@ -30,8 +33,11 @@ export class ViewHolderDirective implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.state$?.pipe(takeUntil(this.destroy$)).subscribe((state) => {
       this.viewContainerRef.clear();
-      if (!!this.components && has(this.components, state.toString())) {
-        const compType = this.components[state];
+      if (
+        !!this.componentsConfig &&
+        has(this.componentsConfig, state.toString())
+      ) {
+        const compType = this.componentsConfig[state];
         if (!!compType) {
           const component = this.componentFactoryResolver.resolveComponentFactory(
             compType
@@ -39,7 +45,17 @@ export class ViewHolderDirective implements OnInit, OnDestroy {
           this.viewContainerRef.createComponent(component);
         }
       }
+      this.runStateChangeEffects(state);
     });
+  }
+
+  private runStateChangeEffects(state: string): void {
+    if (!!this.effects && has(this.effects, state.toString())) {
+      const effect = this.effects[state];
+      if (!!effect) {
+        effect();
+      }
+    }
   }
 
   ngOnDestroy(): void {

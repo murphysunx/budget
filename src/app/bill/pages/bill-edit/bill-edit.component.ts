@@ -3,13 +3,10 @@ import { Component, OnInit } from '@angular/core';
 @Component({
   selector: 'bgt-bill-edit',
   templateUrl: './bill-edit.component.html',
-  styleUrls: ['./bill-edit.component.scss']
+  styleUrls: ['./bill-edit.component.scss'],
 })
 export class BillEditComponent implements OnInit {
+  constructor() {}
 
-  constructor() { }
-
-  ngOnInit(): void {
-  }
-
+  ngOnInit(): void {}
 }

@@ -9,14 +9,14 @@ import { ChipsAutocompleteComponent } from './components/chips-autocomplete/chip
 import { FileInputComponent } from './components/file-input/file-input.component';
 import { ButtonLoadingComponent } from './components/stateful/stateful-button/stateful-button-loading/loading.component';
 import { StatefulDirective } from './components/stateful/stateful.directive';
-import { ViewHolderDirective } from './components/stateful/view-holder.directive';
+import { StatefulViewDirective } from './components/stateful/stateful-view.directive';
 
 @NgModule({
   declarations: [
     FileInputComponent,
     StatefulDirective,
     ButtonLoadingComponent,
-    ViewHolderDirective,
+    StatefulViewDirective,
     ChipsAutocompleteComponent,
   ],
   imports: [
@@ -31,7 +31,7 @@ import { ViewHolderDirective } from './components/stateful/view-holder.directive
     FileInputComponent,
     StatefulDirective,
     ButtonLoadingComponent,
-    ViewHolderDirective,
+    StatefulViewDirective,
     ChipsAutocompleteComponent,
   ],
 })

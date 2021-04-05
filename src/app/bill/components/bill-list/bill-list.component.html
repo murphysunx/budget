@@ -1,5 +1,5 @@
 <div *ngIf="bills">
   <div *ngFor="let bill of bills; let i = index">
-    <bgt-bill-card-loaded [bill]="bill" [cardIndex]="i"></bgt-bill-card-loaded>
+    <bgt-bill-card [bill]="bill" [cardIndex]="i"></bgt-bill-card>
   </div>
 </div>
