@@ -46,6 +46,7 @@
         matInput
         placeholder="Cost"
         type="number"
+        [attr.disabled]="showDetails"
         [formControl]="getBillItemPropertyControl('cost')"
       />
     </mat-form-field>

@@ -100,8 +100,16 @@ export class ChipsAutocompleteComponent implements OnInit {
     const input = event.input;
     const value = event.value;
     this.addItem(value);
-    if (input) {
-      input.value = '';
+    // if (input) {
+    //   input.value = '';
+    // }
+    // this.itemCtrl.setValue(null);
+    this.cleanInput();
+  }
+
+  private cleanInput(): void {
+    if (this.itemInput.nativeElement) {
+      this.itemInput.nativeElement.value = '';
     }
     this.itemCtrl.setValue(null);
   }
@@ -120,5 +128,11 @@ export class ChipsAutocompleteComponent implements OnInit {
     this.addItem(event.option.value);
     this.itemInput.nativeElement.value = '';
     this.itemCtrl.setValue(null);
+  }
+
+  onBlur(): void {
+    // console.log(`[chips-autocomplete] blur`, this.itemInput.nativeElement);
+    this.addItem(this.itemInput.nativeElement.value);
+    this.cleanInput();
   }
 }

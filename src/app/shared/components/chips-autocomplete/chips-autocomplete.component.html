@@ -17,6 +17,7 @@
       [matAutocomplete]="auto"
       [matChipInputFor]="chipList"
       [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+      (blur)="onBlur()"
       (matChipInputTokenEnd)="add($event)"
     />
     <button
