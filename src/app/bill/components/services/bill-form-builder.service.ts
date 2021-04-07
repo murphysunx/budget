@@ -11,7 +11,7 @@ import { map } from 'underscore';
 
 @Injectable()
 export class BillFormBuilderService {
-  constructor(private fb: FormBuilder) {}
+  constructor(private fb: FormBuilder) { }
 
   createBillForm(): FormGroup {
     return this.fb.group({
@@ -21,7 +21,7 @@ export class BillFormBuilderService {
       payDate: this.fb.control(null, [Validators.required]),
       effectStartDate: this.fb.control(null),
       effectEndDate: this.fb.control(null),
-      items: this.fb.array([]),
+      items: this.fb.array([], [Validators.minLength(1)]),
     });
   }
 
@@ -31,7 +31,7 @@ export class BillFormBuilderService {
       price: this.fb.control(item?.price || null, [Validators.min(0)]),
       categories: this.createBillItemCategoryForm(item?.categories),
       qty: this.fb.control(item?.qty || null, [Validators.min(0)]),
-      cost: this.fb.control(item?.cost || null, [Validators.min(0)]),
+      cost: this.fb.control(item?.cost || null, [Validators.min(0), Validators.required]),
       note: this.fb.control(item?.note || null),
     });
   }

@@ -1,5 +1,6 @@
 import {
   ComponentFactoryResolver,
+  ComponentRef,
   Directive,
   Input,
   OnDestroy,
@@ -9,15 +10,17 @@ import {
 } from '@angular/core';
 import { Observable, Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
-import { has } from 'underscore';
+import { has, each, pairs } from 'underscore';
+import { IStateful } from './stateful';
 
 @Directive({
   selector: '[statefulView]',
 })
 export class StatefulViewDirective implements OnInit, OnDestroy {
   private destroy$ = new Subject();
+  private cmpRef: ComponentRef<any> | undefined;
 
-  @Input() state$?: Observable<any>;
+  @Input() state$?: Observable<IStateful<any>>;
   @Input() componentsConfig?: {
     [key: string]: Type<any> | undefined;
   };
@@ -28,10 +31,11 @@ export class StatefulViewDirective implements OnInit, OnDestroy {
   constructor(
     private viewContainerRef: ViewContainerRef,
     private componentFactoryResolver: ComponentFactoryResolver
-  ) {}
+  ) { }
 
   ngOnInit(): void {
-    this.state$?.pipe(takeUntil(this.destroy$)).subscribe((state) => {
+    this.state$?.pipe(takeUntil(this.destroy$)).subscribe((stateful) => {
+      const { state, attrs } = stateful;
       this.viewContainerRef.clear();
       if (
         !!this.componentsConfig &&
@@ -39,13 +43,26 @@ export class StatefulViewDirective implements OnInit, OnDestroy {
       ) {
         const compType = this.componentsConfig[state];
         if (!!compType) {
-          const component = this.componentFactoryResolver.resolveComponentFactory(
+          const facotry = this.componentFactoryResolver.resolveComponentFactory(
             compType
           );
-          this.viewContainerRef.createComponent(component);
+          this.cmpRef = this.viewContainerRef.createComponent(facotry);
+          if (!!attrs) {
+            this.setupAttrs(this.cmpRef.instance, attrs);
+          }
         }
       }
       this.runStateChangeEffects(state);
+    });
+  }
+
+  private setupAttrs(component: any, attrs: { [key: string]: any }): void {
+    const pairList = pairs(attrs);
+    if (pairList.length === 0) {
+      return;
+    }
+    each(pairList, ([key, val]) => {
+      component[key] = val;
     });
   }
 
