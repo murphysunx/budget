@@ -1,6 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormArray, FormControl, FormGroup } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
+import { IBillItem } from '@bill/types/bill-item';
+import { ChipsAutocompleteComponent } from '@shared/components/chips-autocomplete/chips-autocomplete.component';
+import { each } from 'underscore';
 import { BillItemCategoryDialogComponent } from '../bill-item-category-dialog/bill-item-category-dialog.component';
 import { BillItemFormService } from './bill-item-form.service';
 
@@ -11,6 +14,9 @@ import { BillItemFormService } from './bill-item-form.service';
   providers: [BillItemFormService],
 })
 export class BillItemFormComponent implements OnInit {
+  @ViewChild('itemCategoryInput', { static: true })
+  itemCategoryInput!: ChipsAutocompleteComponent;
+
   showDetails = false;
 
   get billItemControl(): FormGroup {
@@ -25,6 +31,25 @@ export class BillItemFormComponent implements OnInit {
   }
 
   ngOnInit(): void {}
+
+  loadBillItem(item: IBillItem): void {
+    this.billItemFormService.loadBillItem(item);
+    if (!!item.categories && item.categories.length > 0) {
+      each(item.categories, (it) => {
+        this.itemCategoryInput.addItem(it);
+      });
+    }
+    if (item.qty !== undefined && item.price !== undefined) {
+      this.showDetails = true;
+    }
+  }
+
+  toggleDetail(): void {
+    if (this.showDetails) {
+      this.billItemFormService.turnOffBillItemDetail();
+    }
+    this.showDetails = !this.showDetails;
+  }
 
   getBillItemPropertyControl(propertyName: string): FormControl {
     return this.billItemControl.get(propertyName) as FormControl;

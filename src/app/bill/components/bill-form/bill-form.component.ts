@@ -4,9 +4,11 @@ import {
   Input,
   OnInit,
   Output,
-  ViewChild
+  ViewChild,
 } from '@angular/core';
 import { FormGroup } from '@angular/forms';
+import { IBillItem } from '@bill/types/bill-item';
+import { each } from 'underscore';
 import { Bill, IDraftBill } from '../../types/bill';
 import { BillItemContainerDirective } from '../bill-item-form/bill-item-container.directive';
 import { BillFormBuilderService } from '../services/bill-form-builder.service';
@@ -25,11 +27,15 @@ export class BillFormComponent implements OnInit {
   @ViewChild(BillItemContainerDirective, { static: true })
   billItemContnerDirctv!: BillItemContainerDirective;
 
-  constructor(private billFormService: BillFormService) { }
+  constructor(private billFormService: BillFormService) {}
 
   ngOnInit(): void {
     this.billFormService.loadBillToForm(this.bill);
-    
+    if (!!this.bill && !!this.bill.items && this.bill.items.length > 0) {
+      each(this.bill.items, (item) => {
+        this.onAddItem(item);
+      });
+    }
   }
 
   get billForm(): FormGroup {
@@ -56,9 +62,9 @@ export class BillFormComponent implements OnInit {
     this.billItemContnerDirctv.cleanBillItems();
   }
 
-  onAddItem(): void {
+  onAddItem(item?: IBillItem): void {
     // this.billFormService.onAddItem();
-    const comp = this.billItemContnerDirctv.addBillItemComponent();
+    const comp = this.billItemContnerDirctv.addBillItemComponent(item);
     this.billFormService.onAddItem(comp.billItemControl);
   }
 

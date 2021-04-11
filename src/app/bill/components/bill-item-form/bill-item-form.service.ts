@@ -47,6 +47,25 @@ export class BillItemFormService implements OnDestroy {
     });
   }
 
+  loadBillItem(item: IBillItem): void {
+    this.billItemControl?.patchValue(item);
+    if (!!item.categories && item.categories.length > 0) {
+      const categoryArrayControl = this.billItemControl!.get(
+        'categories'
+      ) as FormArray;
+      categoryArrayControl.patchValue(item.categories);
+    }
+  }
+
+  turnOffBillItemDetail(): void {
+    const costCtrl = this.billItemControl!.get('cost') as FormControl;
+    this.billItemControl?.patchValue({
+      qty: undefined,
+      price: undefined,
+      cost: costCtrl.value,
+    });
+  }
+
   addCategory(category: string): void {
     const categoryArrayControl = this.billItemControl!.get(
       'categories'

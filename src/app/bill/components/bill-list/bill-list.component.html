@@ -1,5 +1,12 @@
-<div *ngIf="bills">
+<!-- <div *ngIf="bills">
   <div *ngFor="let bill of bills; let i = index">
     <bgt-bill-card [bill]="bill" [cardIndex]="i"></bgt-bill-card>
   </div>
+</div> -->
+<div class="container">
+  <mat-list *ngIf="!!bills" style="height: fit-content;">
+    <mat-list-item *ngFor="let bill of bills; let i = index">
+      <bgt-bill-card [bill]="bill" [cardIndex]="i"></bgt-bill-card>
+    </mat-list-item>
+  </mat-list>
 </div>

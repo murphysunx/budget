@@ -31,6 +31,7 @@ export class Bill {
     this.payee = draft.payee;
     this.venue = draft.venue;
     this.effectStartDate = draft.effectStartDate;
+    this.effectEndDate = draft.effectEndDate;
     this.payDate = draft.payDate;
     this.items = draft.items;
     this.note = draft.note;

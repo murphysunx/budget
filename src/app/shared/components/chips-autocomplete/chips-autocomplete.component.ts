@@ -66,7 +66,7 @@ export class ChipsAutocompleteComponent implements OnInit {
     return (value || '').trim();
   }
 
-  private addItem(value: string): void {
+  addItem(value: string): void {
     value = this.preprocessValue(value);
     if (!value) {
       return;

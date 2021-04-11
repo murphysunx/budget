@@ -10,6 +10,8 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
+import { MatListModule } from '@angular/material/list';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { SharedModule } from '@shared/share.module';
 import { BillRoutingModule } from './bill-routing.module';
 import { BillCardComponent } from './components/bill-card/bill-card.component';
@@ -21,14 +23,13 @@ import { BillCardLoadedComponent } from './components/bill-card/templates/bill-c
 import { BillCardLoadingComponent } from './components/bill-card/templates/bill-card-loading/bill-card-loading.component';
 import { BillFormComponent } from './components/bill-form/bill-form.component';
 import { BillItemCategoryDialogComponent } from './components/bill-item-category-dialog/bill-item-category-dialog.component';
+import { BillItemContainerDirective } from './components/bill-item-form/bill-item-container.directive';
 import { BillItemFormComponent } from './components/bill-item-form/bill-item-form.component';
 import { BillListComponent } from './components/bill-list/bill-list.component';
+import { BillEditComponent } from './pages/bill-edit/bill-edit.component';
 import { BillHomeComponent } from './pages/bill-home/bill-home.component';
 import { BillImportComponent } from './pages/bill-import/bill-import.component';
 import { BillNewComponent } from './pages/bill-new/bill-new.component';
-import { MatSlideToggleModule } from '@angular/material/slide-toggle';
-import { BillItemContainerDirective } from './components/bill-item-form/bill-item-container.directive';
-import { BillEditComponent } from './pages/bill-edit/bill-edit.component';
 
 @NgModule({
   declarations: [
@@ -66,6 +67,7 @@ import { BillEditComponent } from './pages/bill-edit/bill-edit.component';
     MatDialogModule,
     MatIconModule,
     MatSlideToggleModule,
+    MatListModule,
   ],
   exports: [BillHomeComponent, BillImportComponent, BillNewComponent],
 })

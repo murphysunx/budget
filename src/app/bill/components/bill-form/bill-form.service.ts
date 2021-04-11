@@ -53,15 +53,15 @@ export class BillFormService implements OnDestroy {
         ? dayjs(bill.effectEndDate).toDate()
         : null,
     });
-    const itemsArray = this.billForm.get('items') as FormArray;
-    if (bill?.items) {
-      each(bill.items, (item) => {
-        const itemControl = this.billFormBuilderService.createBillItemForm(
-          item || null
-        );
-        itemsArray.push(itemControl);
-      });
-    }
+    // const itemsArray = this.billForm.get('items') as FormArray;
+    // if (bill?.items) {
+    //   each(bill.items, (item) => {
+    //     const itemControl = this.billFormBuilderService.createBillItemForm(
+    //       item || null
+    //     );
+    //     itemsArray.push(itemControl);
+    //   });
+    // }
   }
 
   private handlePayDateUpdate(value: any): void {
