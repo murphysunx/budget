@@ -1,1 +1,11 @@
-<p>bill-edit works!</p>
+<div class="container">
+  <bgt-bill-form
+    *ngIf="!!bill; else notExist"
+    #billForm
+    [bill]="bill"
+    (submitted)="onSubmit($event)"
+  ></bgt-bill-form>
+  <ng-template #notExist>
+    <p>bill not exist</p>
+  </ng-template>
+</div>

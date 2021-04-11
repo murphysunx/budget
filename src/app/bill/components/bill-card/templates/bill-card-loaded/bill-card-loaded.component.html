@@ -13,7 +13,7 @@
     {{ bill.note || "" }}
   </mat-card-content>
   <mat-card-actions>
-    <button mat-button>Detail</button>
+    <button mat-button (click)="onEditBill()">Edit</button>
     <button mat-button>Star</button>
   </mat-card-actions>
 </mat-card>

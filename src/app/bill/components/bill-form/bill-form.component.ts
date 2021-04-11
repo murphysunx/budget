@@ -4,12 +4,11 @@ import {
   Input,
   OnInit,
   Output,
-  ViewChild,
+  ViewChild
 } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { Bill, IDraftBill } from '../../types/bill';
 import { BillItemContainerDirective } from '../bill-item-form/bill-item-container.directive';
-import { BillItemFormComponent } from '../bill-item-form/bill-item-form.component';
 import { BillFormBuilderService } from '../services/bill-form-builder.service';
 import { BillFormService } from './bill-form.service';
 
@@ -26,10 +25,11 @@ export class BillFormComponent implements OnInit {
   @ViewChild(BillItemContainerDirective, { static: true })
   billItemContnerDirctv!: BillItemContainerDirective;
 
-  constructor(private billFormService: BillFormService) {}
+  constructor(private billFormService: BillFormService) { }
 
   ngOnInit(): void {
     this.billFormService.loadBillToForm(this.bill);
+    
   }
 
   get billForm(): FormGroup {
@@ -62,7 +62,7 @@ export class BillFormComponent implements OnInit {
     this.billFormService.onAddItem(comp.billItemControl);
   }
 
-  addBillItem(item: BillItemFormComponent): void {
-    const ctrl = item.billItemControl;
+  isReadyToAddItem(): boolean {
+    return this.billFormService.isReadyToAddItem();
   }
 }

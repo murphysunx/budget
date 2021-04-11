@@ -16,7 +16,7 @@ export class BillService {
     elements: {},
   });
 
-  constructor() {}
+  constructor() { }
 
   get bills$(): Observable<Bill[]> {
     return this.orderedBills$.pipe(
@@ -51,9 +51,12 @@ export class BillService {
     return item;
   }
 
-  getBill(billId: string): Observable<IBill | null> {
-    // TODO
-    return of({} as IBill);
+  getBill(billId: string): Observable<Bill | null> {
+    if (_.include(this.orderedBills$.value.ids, billId)) {
+      const bill = this.orderedBills$.value.elements[billId];
+      return of(bill);
+    }
+    return of(null);
   }
 
   getBills(): void {

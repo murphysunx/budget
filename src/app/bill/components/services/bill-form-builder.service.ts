@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import {
+  AbstractControl,
   FormArray,
   FormBuilder,
   FormControl,
@@ -8,6 +9,15 @@ import {
 } from '@angular/forms';
 import { IBillItem } from '@bill/types/bill-item';
 import { map } from 'underscore';
+
+export const minLengthArray = (min: number) => {
+  return (c: AbstractControl): { [key: string]: any } | null => {
+    if (c.value.length >= min) {
+      return null;
+    }
+    return { MinLengthArray: true };
+  };
+};
 
 @Injectable()
 export class BillFormBuilderService {
@@ -21,7 +31,7 @@ export class BillFormBuilderService {
       payDate: this.fb.control(null, [Validators.required]),
       effectStartDate: this.fb.control(null),
       effectEndDate: this.fb.control(null),
-      items: this.fb.array([], [Validators.minLength(1)]),
+      items: this.fb.array([], [minLengthArray(1)]),
     });
   }
 

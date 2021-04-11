@@ -1,4 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { Bill } from '@bill/types/bill';
 
 @Component({
@@ -10,7 +11,11 @@ export class BillCardLoadedComponent implements OnInit {
   @Input() cardIndex?: number;
   @Input() bill!: Bill;
 
-  constructor() {}
+  constructor(private router: Router) { }
 
-  ngOnInit(): void {}
+  ngOnInit(): void { }
+
+  onEditBill(): void {
+    this.router.navigate([`/edit/${this.bill.id}`]);
+  }
 }

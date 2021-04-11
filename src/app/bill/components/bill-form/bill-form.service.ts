@@ -5,7 +5,7 @@ import { ErrorService } from '@core/errors/error.service';
 import * as dayjs from 'dayjs';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
-import { each } from 'underscore';
+import { each, pairs } from 'underscore';
 import { BillFormBuilderService } from '../services/bill-form-builder.service';
 
 @Injectable()
@@ -112,5 +112,18 @@ export class BillFormService implements OnDestroy {
   onAddItem(ctrl: FormGroup): void {
     const itemsArray = this.billForm.get('items') as FormArray;
     itemsArray.push(ctrl);
+  }
+
+  isReadyToAddItem(): boolean {
+    const controls = this.billForm.controls;
+    for (const contr of pairs(controls)) {
+      const [key, val] = contr;
+      if (key === 'items' || val.valid) {
+        continue;
+      } else {
+        return false;
+      }
+    }
+    return true;
   }
 }
