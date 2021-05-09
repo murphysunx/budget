@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormArray, FormControl, FormGroup } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
-import { IBillItem } from '@bill/types/bill-item';
+import { IBillItemDraft } from '@bill/types/bill-item';
 import { ChipsAutocompleteComponent } from '@shared/components/chips-autocomplete/chips-autocomplete.component';
 import { each } from 'underscore';
 import { BillItemCategoryDialogComponent } from '../bill-item-category-dialog/bill-item-category-dialog.component';
@@ -32,7 +32,7 @@ export class BillItemFormComponent implements OnInit {
 
   ngOnInit(): void {}
 
-  loadBillItem(item: IBillItem): void {
+  loadBillItem(item: IBillItemDraft): void {
     this.billItemFormService.loadBillItem(item);
     if (!!item.categories && item.categories.length > 0) {
       each(item.categories, (it) => {

@@ -4,7 +4,7 @@ import {
   OnInit,
   ViewContainerRef,
 } from '@angular/core';
-import { IBillItem } from '@bill/types/bill-item';
+import { IBillItemDraft } from '@bill/types/bill-item';
 import { BillItemFormComponent } from './bill-item-form.component';
 
 @Directive({
@@ -18,7 +18,7 @@ export class BillItemContainerDirective implements OnInit {
 
   ngOnInit(): void {}
 
-  addBillItemComponent(item?: IBillItem): BillItemFormComponent {
+  addBillItemComponent(item?: IBillItemDraft): BillItemFormComponent {
     const billItem = this.componentFactoryResolver.resolveComponentFactory(
       BillItemFormComponent
     );

@@ -1,6 +1,6 @@
 import { Injectable, OnDestroy } from '@angular/core';
 import { FormArray, FormControl, FormGroup } from '@angular/forms';
-import { IBillItem } from '@bill/types/bill-item';
+import { IBillItemDraft } from '@bill/types/bill-item';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { BillFormBuilderService } from '../services/bill-form-builder.service';
@@ -18,7 +18,7 @@ export class BillItemFormService implements OnDestroy {
     this.destroy$.complete();
   }
 
-  createBillItemCtrl(item?: IBillItem): void {
+  createBillItemCtrl(item?: IBillItemDraft): void {
     const ctrl = this.billFormBuilderService.createBillItemForm(item);
     this.billItemControl = ctrl;
     this.setup();
@@ -47,7 +47,7 @@ export class BillItemFormService implements OnDestroy {
     });
   }
 
-  loadBillItem(item: IBillItem): void {
+  loadBillItem(item: IBillItemDraft): void {
     this.billItemControl?.patchValue(item);
     if (!!item.categories && item.categories.length > 0) {
       const categoryArrayControl = this.billItemControl!.get(

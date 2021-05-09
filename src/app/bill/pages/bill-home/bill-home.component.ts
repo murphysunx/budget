@@ -9,11 +9,14 @@ import { Bill } from '../../types/bill';
   styleUrls: ['./bill-home.component.scss'],
 })
 export class BillHomeComponent implements OnInit {
-  constructor(private billService: BillService) {}
+  constructor(private billService: BillService) { }
 
   get bills$(): Observable<Bill[]> {
     return this.billService.bills$;
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    // tslint:disable-next-line: deprecation
+    this.billService.fetchBills$().subscribe();
+  }
 }

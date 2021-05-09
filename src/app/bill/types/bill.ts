@@ -1,4 +1,4 @@
-import { IBillItem } from './bill-item';
+import { IBillItemDraft } from './bill-item';
 import { reduce } from 'underscore';
 
 export interface IDraftBill {
@@ -8,7 +8,7 @@ export interface IDraftBill {
   effectStartDate?: string;
   effectEndDate?: string;
   payDate: string;
-  items?: IBillItem[];
+  // items?: IBillItemDraft[];
   note?: string;
   cost?: number;
 }
@@ -21,7 +21,6 @@ export class Bill {
   public effectStartDate: string | undefined;
   public effectEndDate: string | undefined;
   public payDate: string;
-  public items: IBillItem[] | undefined;
   public note: string | undefined;
   public cost: number | undefined;
 
@@ -33,19 +32,8 @@ export class Bill {
     this.effectStartDate = draft.effectStartDate;
     this.effectEndDate = draft.effectEndDate;
     this.payDate = draft.payDate;
-    this.items = draft.items;
     this.note = draft.note;
     this.cost = draft.cost;
-  }
-
-  get total(): number {
-    if (!!this.items) {
-      return reduce(this.items, (prev, curr) => prev + curr.cost, 0);
-    }
-    if (!!this.cost) {
-      return this.cost;
-    }
-    throw new Error('no cost');
   }
 }
 

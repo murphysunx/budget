@@ -7,7 +7,7 @@ import {
   FormGroup,
   Validators,
 } from '@angular/forms';
-import { IBillItem } from '@bill/types/bill-item';
+import { IBillItemDraft } from '@bill/types/bill-item';
 import { map } from 'underscore';
 
 export const minLengthArray = (min: number) => {
@@ -35,7 +35,7 @@ export class BillFormBuilderService {
     });
   }
 
-  createBillItemForm(item?: IBillItem): FormGroup {
+  createBillItemForm(item?: IBillItemDraft): FormGroup {
     return this.fb.group({
       name: this.fb.control(item?.name || null, [Validators.required]),
       price: this.fb.control(item?.price || null, [Validators.min(0)]),

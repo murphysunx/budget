@@ -22,20 +22,20 @@ export class BillCardComponent implements OnInit {
   stateConfig: {
     [key in keyof typeof EBillCardStates]: Type<any>;
   } = {
-    notInit: BillCardEmptyComponent,
-    loading: BillCardLoadingComponent,
-    loaded: BillCardLoadedComponent,
-    empty: BillCardEmptyComponent,
-    error: BillCardErrorComponent,
-  };
+      notInit: BillCardEmptyComponent,
+      loading: BillCardLoadingComponent,
+      loaded: BillCardLoadedComponent,
+      empty: BillCardEmptyComponent,
+      error: BillCardErrorComponent,
+    };
 
   readonly BillCardState = EBillCardStates;
 
-  constructor(public billCardService: BillCardService) {}
+  constructor(public billCardService: BillCardService) { }
 
   ngOnInit(): void {
     if (!!this.bill) {
-      this.billCardService.loadBill(this.bill);
+      this.billCardService.loadBill(this.bill, this.cardIndex);
     } else {
       this.billCardService.loadBillById(this.billId);
     }
