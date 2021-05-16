@@ -1,6 +1,7 @@
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Bill, IDraftBill } from '@bill/types/bill';
+import { IBillItemDraft } from '@bill/types/bill-item';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 
@@ -27,5 +28,5 @@ export class BillEditComponent implements OnInit, OnDestroy {
     this.destroy$.complete();
   }
 
-  onSubmit(bill: IDraftBill): void { }
+  onSubmit(bill: { bill: IDraftBill; items: IBillItemDraft[]; }): void { }
 }

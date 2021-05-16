@@ -64,7 +64,7 @@ export class BillService {
 
   createBill(rawBill: IDraftBill, items: IBillItemDraft[] = []): Observable<any> {
     // const id = uuid4();
-    return this.postBill(rawBill).pipe(
+    return this.postBill({ ...rawBill, cost: _.reduce(items, (pre, cur) => pre + cur.cost, 0) }).pipe(
       tap(response => {
         const bill = new Bill(response.id, response);
         const { ids, elements } = this.orderedBills$.value;

@@ -38,11 +38,11 @@ export class BillFormBuilderService {
   createBillItemForm(item?: IBillItemDraft): FormGroup {
     return this.fb.group({
       name: this.fb.control(item?.name || null, [Validators.required]),
-      price: this.fb.control(item?.price || null, [Validators.min(0)]),
+      price: this.fb.control(item?.price || 0, [Validators.min(0)]),
       categories: this.createBillItemCategoryForm(item?.categories),
-      qty: this.fb.control(item?.qty || null, [Validators.min(0)]),
-      cost: this.fb.control(item?.cost || null, [Validators.min(0), Validators.required]),
-      note: this.fb.control(item?.note || null),
+      qty: this.fb.control(item?.qty || 0, [Validators.min(0)]),
+      cost: this.fb.control(item?.cost || 0, [Validators.min(0), Validators.required]),
+      note: this.fb.control(item?.note || ''),
     });
   }
 

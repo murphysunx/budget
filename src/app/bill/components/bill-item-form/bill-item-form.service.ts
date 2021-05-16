@@ -11,7 +11,7 @@ export class BillItemFormService implements OnDestroy {
 
   billItemControl: FormGroup | null = null;
 
-  constructor(private billFormBuilderService: BillFormBuilderService) {}
+  constructor(private billFormBuilderService: BillFormBuilderService) { }
 
   ngOnDestroy(): void {
     this.destroy$.next();
@@ -60,8 +60,8 @@ export class BillItemFormService implements OnDestroy {
   turnOffBillItemDetail(): void {
     const costCtrl = this.billItemControl!.get('cost') as FormControl;
     this.billItemControl?.patchValue({
-      qty: undefined,
-      price: undefined,
+      qty: '',
+      price: '',
       cost: costCtrl.value,
     });
   }

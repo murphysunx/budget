@@ -14,7 +14,7 @@ export class BillItemService {
   constructor(private http: HttpClient) { }
 
   private postBillItems(items: IBillItemDraft[], billId: string): Observable<BillItem[]> {
-    return this.http.post<(IBillItem)[]>(environment.backend + `bills/${billId}/items`, items).pipe(
+    return this.http.post<(IBillItem)[]>(environment.backend + `bills/${billId}/items/`, items).pipe(
       map(response => {
         return _.map(response, (resp) => {
           const item = new BillItem(resp.id, resp);
