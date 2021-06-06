@@ -5,7 +5,7 @@ import { ErrorService } from '@core/errors/error.service';
 import * as dayjs from 'dayjs';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
-import { each, pairs } from 'underscore';
+import { pairs } from 'underscore';
 import { BillFormBuilderService } from '../services/bill-form-builder.service';
 
 @Injectable()

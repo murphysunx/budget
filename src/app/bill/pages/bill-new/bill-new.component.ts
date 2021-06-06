@@ -4,7 +4,6 @@ import { BillFormComponent } from '@bill/components/bill-form/bill-form.componen
 import { BillService } from '@bill/data/bill.service';
 import { Bill, IDraftBill } from '@bill/types/bill';
 import { IBillItemDraft } from '@bill/types/bill-item';
-import { ConfirmationService } from 'primeng/api';
 
 @Component({
   selector: 'bgt-bill-new',
@@ -14,7 +13,7 @@ import { ConfirmationService } from 'primeng/api';
 export class BillNewComponent implements OnInit {
   @ViewChild(BillFormComponent, { static: true }) billForm!: BillFormComponent;
 
-  constructor(private billService: BillService, private confirmationService: ConfirmationService, private route: Router) { }
+  constructor(private billService: BillService, private route: Router) { }
 
   ngOnInit(): void { }
 
@@ -29,14 +28,14 @@ export class BillNewComponent implements OnInit {
   }
 
   private onBillCreated(bill: Bill): void {
-    this.confirmationService.confirm({
-      message: `Do you like to continue to make more bills?`,
-      accept: () => {
-        this.billForm.onResetBillForm();
-      },
-      reject: () => {
-        this.route.navigate([`/home`]);
-      }
-    });
+    // this.confirmationService.confirm({
+    //   message: `Do you like to continue to make more bills?`,
+    //   accept: () => {
+    //     this.billForm.onResetBillForm();
+    //   },
+    //   reject: () => {
+    //     this.route.navigate([`/home`]);
+    //   }
+    // });
   }
 }

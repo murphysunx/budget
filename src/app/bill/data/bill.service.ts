@@ -5,7 +5,6 @@ import { environment } from 'environments/environment';
 import { BehaviorSubject, Observable, of } from 'rxjs';
 import { catchError, map, switchMap, tap } from 'rxjs/operators';
 import * as _ from 'underscore';
-import { v4 as uuid4 } from 'uuid';
 import { Bill, IBill, IDraftBill } from '../types/bill';
 import { IBillItemDraft } from '../types/bill-item';
 import { BillItemService } from './bill-item.service';

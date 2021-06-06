@@ -1,0 +1,9 @@
+<div class="">
+  <mat-grid-list [cols]="cols" [rowHeight]="rowHeight">
+    <mat-grid-tile *ngFor="let warehouse of warehouses">
+      <bgt-warehouse-center-card
+        [warehouse]="warehouse"
+      ></bgt-warehouse-center-card>
+    </mat-grid-tile>
+  </mat-grid-list>
+</div>

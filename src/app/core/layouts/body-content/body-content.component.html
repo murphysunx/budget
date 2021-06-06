@@ -1,9 +1,11 @@
 <mat-sidenav-container class="w-100 h-100">
   <mat-sidenav [opened]="isSideNavOpen$ | async" mode="side">
-    <bgt-side-nav></bgt-side-nav>
+    <bgt-side-nav>
+      <ng-content select="[sidebar]"></ng-content>
+    </bgt-side-nav>
   </mat-sidenav>
 
   <mat-sidenav-content>
-    <ng-content></ng-content>
+    <ng-content select="[content]"></ng-content>
   </mat-sidenav-content>
 </mat-sidenav-container>

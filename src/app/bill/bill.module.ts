@@ -14,9 +14,6 @@ import { MatInputModule } from '@angular/material/input';
 import { MatListModule } from '@angular/material/list';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { SharedModule } from '@shared/share.module';
-import { ConfirmationService } from 'primeng/api';
-import { ConfirmDialogModule } from 'primeng/confirmdialog';
-import { ConfirmPopupModule } from 'primeng/confirmpopup';
 import { BillRoutingModule } from './bill-routing.module';
 import { BillCardComponent } from './components/bill-card/bill-card.component';
 import { BillCardEmptyComponent } from './components/bill-card/templates/bill-card-empty/bill-card-empty.component';
@@ -72,11 +69,9 @@ import { BillNewComponent } from './pages/bill-new/bill-new.component';
     MatIconModule,
     MatSlideToggleModule,
     MatListModule,
-    ConfirmPopupModule,
     HttpClientModule,
-    ConfirmDialogModule,
   ],
-  providers: [ConfirmationService, ConfirmationService],
+  providers: [],
   exports: [BillHomeComponent, BillImportComponent, BillNewComponent],
 })
 export class BillModule { }

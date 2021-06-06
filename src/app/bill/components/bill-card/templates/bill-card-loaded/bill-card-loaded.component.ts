@@ -1,7 +1,10 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { Bill } from '@bill/types/bill';
-import { ConfirmationService } from 'primeng/api';
+import { ConfirmationDialogComponent } from '@shared/components/dialogs/confirmation-dialog/confirmation-dialog.component';
+import { IGeneralDialogData } from '@shared/components/dialogs/general-dialog/general-dialog.component';
+import { NotifierService } from '@shared/components/notifications/notifier.service';
 
 @Component({
   selector: 'bgt-bill-card-loaded',
@@ -14,7 +17,7 @@ export class BillCardLoadedComponent implements OnInit {
 
   isFavorite = false;
 
-  constructor(private router: Router, private confirmationService: ConfirmationService) { }
+  constructor(private router: Router, private dialog: MatDialog, private notifier: NotifierService) { }
 
   ngOnInit(): void { }
 
@@ -23,12 +26,30 @@ export class BillCardLoadedComponent implements OnInit {
   }
 
   confirmDeleteBill($event: Event): void {
-    this.confirmationService.confirm({
-      target: $event.target as EventTarget,
-      message: `Do you want to delete this bill?`,
-      icon: 'pi pi-exclamation-triangle',
-      accept: () => { },
-      reject: () => { },
-    })
+    const dialogData: IGeneralDialogData = {
+      title: `Alert`,
+      content: `Do you want to delete this bill?`
+    };
+    const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
+      data: dialogData
+    });
+    dialogRef.afterClosed().subscribe(
+      (payload) => {
+        console.log(`close confirmation dialog`, payload);
+        if (!!payload) {
+          const notiRef = this.notifier.open({
+            data: {
+              message: `Bill deleted`,
+              action: `Close`
+            }
+          });
+          notiRef.onAction().subscribe(
+            action => {
+              console.log(`notification action`, action);
+            }
+          );
+        }
+      }
+    );
   }
 }

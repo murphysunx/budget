@@ -1,15 +1,24 @@
 import { NgModule } from '@angular/core';
-import { Routes, RouterModule } from '@angular/router';
+import { RouterModule, Routes } from '@angular/router';
 
 const routes: Routes = [
   {
-    path: ``,
+    path: `bill`,
     loadChildren: () => import('./bill/bill.module').then((m) => m.BillModule),
+  },
+  {
+    path: `whse`,
+    loadChildren: () => import('./warehouse/warehouse.module').then(m => m.WarehouseModule),
+  },
+  {
+    path: `whse`,
+    loadChildren: () => import('./warehouse/warehouse-sidebar/warehouse-sidebar.module').then(m => m.WarehouseSidebarModule),
+    outlet: `sidebar`
   },
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
+  imports: [RouterModule.forRoot(routes, { enableTracing: true })],
   exports: [RouterModule],
 })
-export class AppRoutingModule {}
+export class AppRoutingModule { }

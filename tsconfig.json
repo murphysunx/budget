@@ -20,7 +20,8 @@
     "paths": {
       "@core/*": ["app/core/*"],
       "@shared/*": ["app/shared/*"],
-      "@bill/*": ["app/bill/*"]
+      "@bill/*": ["app/bill/*"],
+      "primeng/*": ["node_module/primeng-lts/*"]
     }
   },
   "angularCompilerOptions": {

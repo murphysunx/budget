@@ -1,0 +1,25 @@
+<mat-card class="warehouse-card">
+  <mat-card-header>
+    <mat-card-title>
+      <a class="nav-link" [routerLink]="['./' + warehouse.id]">{{
+        warehouse.name
+      }}</a>
+    </mat-card-title>
+    <mat-card-subtitle>{{ warehouse.location }}</mat-card-subtitle>
+  </mat-card-header>
+  <mat-card-content>
+    <p-chart
+      type="bar"
+      [data]="productSaleData"
+      [options]="chartOption"
+    ></p-chart>
+  </mat-card-content>
+  <mat-card-actions>
+    <p-splitButton
+      label="View"
+      icon="pi pi-check"
+      (onClick)="viewWarehouse()"
+      [model]="actions"
+    ></p-splitButton>
+  </mat-card-actions>
+</mat-card>

@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 import { LayoutService } from '../layout.service';
 
 @Component({
@@ -7,11 +8,16 @@ import { LayoutService } from '../layout.service';
   styleUrls: ['./head-nav.component.scss'],
 })
 export class HeadNavComponent implements OnInit {
-  constructor(private layoutService: LayoutService) {}
+  constructor(private layoutService: LayoutService, private router: Router, private route: ActivatedRoute) { }
 
-  ngOnInit(): void {}
+  ngOnInit(): void { }
 
   toggleSideBar(): void {
     this.layoutService.toggleSideNav();
+  }
+
+  navigate(path: string): void {
+    this.router.navigate([{ outlets: { primary: path, sidebar: path } }],
+      { relativeTo: this.route });
   }
 }
