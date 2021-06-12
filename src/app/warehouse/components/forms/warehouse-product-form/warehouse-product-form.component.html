@@ -1,0 +1,75 @@
+<div class="p-fluid">
+  <form [formGroup]="productForm">
+    <div class="p-field">
+      <label for="whse-prod-form-code">Code</label>
+      <input
+        id="whse-prod-form-code"
+        type="text"
+        pInputText
+        formControlName="code"
+      />
+    </div>
+
+    <div class="p-field">
+      <label for="whse-prod-form-name">Name</label>
+      <input
+        id="whse-prod-form-name"
+        type="text"
+        pInputText
+        formControlName="name"
+      />
+    </div>
+
+    <div class="p-field">
+      <label for="whse-prod-form-category">Category</label>
+      <p-autoComplete
+        id="whse-prod-form-category"
+        [suggestions]="productCategories"
+        (completeMethod)="searchCategory($event)"
+        [dropdown]="true"
+        formControlName="category"
+      ></p-autoComplete>
+    </div>
+
+    <div class="p-field">
+      <label for="whse-prod-form-qty">Quantity</label>
+      <p-inputNumber
+        id="whse-prod-form-qty"
+        [min]="0"
+        formControlName="quantity"
+      ></p-inputNumber>
+    </div>
+
+    <div class="p-field">
+      <label for="whse-prod-form-unit">Unit</label>
+      <p-autoComplete
+        id="whse-prod-form-unit"
+        [suggestions]="productUnits"
+        (completeMethod)="searchUnit($event)"
+        [dropdown]="true"
+        formControlName="unit"
+      ></p-autoComplete>
+    </div>
+
+    <div class="p-field">
+      <label for="whse-prod-form-packSize">Pack Size</label>
+      <input
+        id="whse-prod-form-packSize"
+        type="text"
+        pInputText
+        formControlName="packSize"
+      />
+    </div>
+
+    <div>
+      <button
+        class="p-mb-2 p-button-success"
+        pButton
+        label="Confirm"
+        (click)="onConfirm()"
+        [disabled]="productForm.invalid"
+      ></button>
+      <button pButton label="Cancel" (click)="onCancel()"></button>
+    </div>
+  </form>
+</div>

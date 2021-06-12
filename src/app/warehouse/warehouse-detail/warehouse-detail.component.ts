@@ -1,73 +1,113 @@
-import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { MatSort } from '@angular/material/sort';
-import { MatTable, MatTableDataSource } from '@angular/material/table';
+import { ActivatedRoute } from '@angular/router';
+import { ProductService } from 'app/product/services/product.service';
+import { IProduct } from 'app/product/types/product';
+import { Table } from 'primeng-lts/table';
+import { filter, pluck, switchMap, tap } from 'rxjs/operators';
 import { WarehouseProductDetailComponent } from './warehouse-product-detail/warehouse-product-detail.component';
-
-export interface IProduct {
-  id: string;
-  name: string;
-  quantity: number;
-  unit: string;
-  packSize: number;
-}
 
 @Component({
   selector: 'bgt-warehouse-detail',
   templateUrl: './warehouse-detail.component.html',
   styleUrls: ['./warehouse-detail.component.scss']
 })
-export class WarehouseDetailComponent implements OnInit, AfterViewInit {
+export class WarehouseDetailComponent implements OnInit {
 
-  @ViewChild('productTable', { static: true }) productTable: MatTable<IProduct> | undefined;
+  @ViewChild('dt') table!: Table;
 
+  whseId: string | undefined;
   products: IProduct[] = [];
-  dataSource!: MatTableDataSource<IProduct>;
-  @ViewChild(MatSort) sort!: MatSort;
 
-  displayedColumns: string[] = ['name', 'quantity'];
+  rowGroupMetadata: any;
+  cols: { field: string, header: string }[] = [];
 
-  constructor(private dialog: MatDialog) { }
+  constructor(
+    private dialog: MatDialog,
+    private route: ActivatedRoute,
+    private productService: ProductService,
+  ) { }
 
   ngOnInit(): void {
-
-  }
-
-  ngAfterViewInit(): void {
-    this.products = [
+    this.route.params.pipe(
+      pluck('id'),
+      filter(x => !!x),
+      tap(id => this.whseId = id),
+      switchMap(id => {
+        return this.productService.getProductsInWhse(id);
+      })
+    ).subscribe(products => {
+      this.products = products;
+      this.updateRowGroupMetaData();
+    });
+    this.cols = [
       {
-        id: `0`,
-        name: `手提袋`,
-        quantity: 10,
-        unit: `把`,
-        packSize: 100
+        field: `name`,
+        header: `商品名`
       },
       {
-        id: `0`,
-        name: `无纺布袋`,
-        quantity: 20,
-        unit: `把`,
-        packSize: 100
+        field: `quantity`,
+        header: `数量`,
+      },
+      {
+        field: `unit`,
+        header: `单位`,
+      },
+      {
+        field: `packSize`,
+        header: `规格`,
       },
     ];
-    if (!!this.productTable) {
-      this.dataSource = new MatTableDataSource(this.products);
-      this.dataSource.sort = this.sort;
-      this.productTable.dataSource = this.dataSource;
-      this.productTable.renderRows();
-    }
   }
 
-  applyFilter(event: Event): void {
-    const filterValue = (event.target as HTMLInputElement).value;
-    this.dataSource.filter = filterValue.trim().toLowerCase();
-    if (this.dataSource.paginator) {
-      this.dataSource.paginator.firstPage();
+  private updateRowGroupMetaData(): void {
+    this.rowGroupMetadata = {};
+    if (this.products) {
+      for (let i = 0; i < this.products.length; i++) {
+        const rowData = this.products[i];
+        const category = rowData.category;
+
+        if (i === 0) {
+          this.rowGroupMetadata[category] = { index: 0, size: 1 };
+        }
+        else {
+          const previousRowData = this.products[i - 1];
+          const previousRowGroup = previousRowData.category;
+          if (category === previousRowGroup) {
+            this.rowGroupMetadata[category].size++;
+          }
+          else {
+            this.rowGroupMetadata[category] = { index: i, size: 1 };
+          }
+        }
+      }
     }
   }
 
   onClickProduct(product: IProduct): void {
     const dialogRef = this.dialog.open(WarehouseProductDetailComponent, {
+      data: product
+    });
+  }
+
+  onSearchQuantity($event: Event): void {
+    const val = ($event.target as HTMLInputElement).value;
+    if (val && val.trim().length) {
+      const quantity = parseInt(val, 10);
+      if (!isNaN(quantity)) {
+        this.table.filter(quantity, 'quantity', 'lte');
+      }
+    } else {
+      this.table.filter(-Infinity, 'quantity', 'gt');
+    }
+  }
+
+  intentNewProduct(): void {
+
+  }
+
+  editProduct(product: IProduct): void {
+    const edit = this.dialog.open(WarehouseProductDetailComponent, {
       data: product
     });
   }
